@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+  memcached:
+    image: memcached:alpine
+    restart: unless-stopped
+  db:
+    image: postgres:11-alpine
+    restart: unless-stopped
+    volumes:
+      - ${CHATONS_ROOT_DIR:-/srv/chatons}/${CHATONS_SERVICE:-sentry}/db:/var/lib/postgresql/data
+  sentry:
+    image: sentry
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - web
+      - default
+    labels:
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host: ${CHATONS_SERVICE:-sentry}.${CHATONS_DOMAIN:-localhost}, www.${CHATONS_SERVICE:-sentry}.${CHATONS_DOMAIN:-localhost}"
+    environment:
+      - SENTRY_REDIS_HOST=redis
+      - SENTRY_POSTGRES_HOST=db
+      - SENTRY_SERVER_EMAIL=${CHATONS_SERVICE:-sentry}@${CHATONS_DOMAIN:-localhost}
+    volumes:
+      - ${CHATONS_ROOT_DIR:-/srv/chatons}/${CHATONS_SERVICE:-sentry}/data:/var/lib/sentry/file
+  cron:
+    command: "sentry run cron"
+    image: sentry
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - SENTRY_REDIS_HOST=redis
+      - SENTRY_POSTGRES_HOST=db
+  worker:
+    command: "sentry run worker"
+    image: sentry
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - SENTRY_REDIS_HOST=redis
+      - SENTRY_POSTGRES_HOST=db
+
+networks:
+  web:
+    external: true

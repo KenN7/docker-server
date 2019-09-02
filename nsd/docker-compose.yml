@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  nsd:
+    image: hardware/nsd-dnssec
+    container_name: nsd
+    ports:
+      - "53:53"
+      - "53:53/udp"
+    volumes:
+      - ${CONF_ROOT_DIR:-/srv/docker}/nsd/conf:/etc/nsd
+      - ${CONF_ROOT_DIR:-/srv/docker}/nsd/zones:/zones
+      - ${CONF_ROOT_DIR:-/srv/docker}/nsd/db:/var/db/nsd

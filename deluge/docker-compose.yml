@@ -1,0 +1,23 @@
+version: "3"
+
+networks:
+  web:
+    external: true
+
+services:
+  deluge:
+    image: linuxserver/deluge
+    ports:
+      - "8112:8112"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=timezone
+      - UMASK_SET=022 #optional
+      - DELUGE_LOGLEVEL=error #optional
+    volumes:
+      - ${CONF_ROOT_DIR:-/srv/docker}/config:/config
+      - ${DATA_ROOT_DIR:-/srv/data}/downloads:/downloads
+    restart: unless-stopped
+    networks:
+      - web

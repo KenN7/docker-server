@@ -1,0 +1,10 @@
+# List of services
+
+- DNS server -> NSD on docker image
+- proxy -> traefik with letsencrypt
+- sites -> nginx
+- torrent -> deluge
+- file transfert -> sftp
+- firewall -> nftables (ou shorewall)
+- cloud -> nexcloud
+- fail2ban

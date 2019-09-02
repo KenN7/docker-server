@@ -1,0 +1,28 @@
+version: '3'
+
+networks:
+  web:
+    external: true
+
+services:
+  app:
+    image: gitlab/gitlab-ce:11.4.5-ce.0
+    restart: unless-stopped
+    hostname: '${CHATONS_SERVICE:-gitlab}.${CHATONS_DOMAIN:-localhost}' # required by gitlab
+    environment:
+      - GITLAB_OMNIBUS_CONFIG |
+        external_url 'http://${CHATONS_SERVICE:-gitlab}.${CHATONS_DOMAIN:-localhost}'
+        registry_external_url 'https://${CHATONS_SERVICE:-gitlab}.${CHATONS_DOMAIN:-localhost}:4567'
+    volumes:
+      - ${CHATONS_ROOT_DIR:-/srv/chatons}/${CHATONS_SERVICE:-gitlab}/app/data:/var/opt/gitlab
+      - ${CHATONS_ROOT_DIR:-/srv/chatons}/${CHATONS_SERVICE:-gitlab}/app/config:/etc/gitlab
+      - ${CHATONS_ROOT_DIR:-/srv/chatons}/${CHATONS_SERVICE:-gitlab}/app/logs:/var/log/gitlab
+    ports:
+      - "2222:22"
+      - "4567:4567"
+    labels:
+      traefik.enable: "true"
+      traefik.frontend.rule: "Host: ${CHATONS_SERVICE:-gitlab}.${CHATONS_DOMAIN:-localhost}, www.${CHATONS_SERVICE:-gitlab}.${CHATONS_DOMAIN:-localhost}"
+      traefik.port: "80"
+    networks:
+      - web
