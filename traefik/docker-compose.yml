@@ -1,4 +1,4 @@
-version: "3.6"
+version: "3"
   
 services:
   socket-proxy:
@@ -9,6 +9,7 @@ services:
       SERVICES: 1
       TASKS: 1
       NETWORKS: 1
+      CONTAINERS: 1
     networks:
       - mgmt
     deploy:
@@ -18,7 +19,8 @@ services:
 
   traefik:
     image: traefik:latest
-    command: --docker --docker.endpoint=tcp://socket-proxy:2375 --docker.watch --docker.swarmMode
+    env_file:
+      - .env
     ports:
       - 443:443
       - 80:80
@@ -29,6 +31,7 @@ services:
       - ./traefik.toml:/etc/traefik/traefik.toml
       - ./acme.json:/acme.json
       - ./htdigest:/htdigest
+    command: --acme.email=${ACME_EMAIL} --docker --docker.endpoint=tcp://socket-proxy:2375 --docker.watch --docker.exposedbydefault=false --docker.network=web
     deploy:
       placement:
         constraints:
@@ -37,10 +40,10 @@ services:
       traefik.enable: "true"
       traefik.port: "8080"
       traefik.frontend.auth.digest.usersFile: "/htdigest"
-      traefik.frontend.rule: "Host: traefik.ananas.space, traefik.kenh.fr"
+      # traefik.frontend.rule: "Host: traefik.ananas.space; Host: traefik.kenh.fr; Host: ns341354.ip-46-105-97.eu"
+      traefik.frontend.rule: "Host: ns341354.ip-46-105-97.eu, traefik.bjk-fansub.com, traefik.ananas.space, traefik.kenh.fr"
 
 networks:
-  mgmt:
-    name: mgmt
+  mgmt:   
   web:
     external: true

@@ -20,6 +20,8 @@ defaultEntryPoints = ["http", "https"]
   regex = "^https://www.(.*)"
   replacement = "https://$1"
 
+[api]
+
 [acme]
 storage = "acme.json"
 entryPoint = "https"
@@ -27,4 +29,3 @@ OnHostRule = true
 [acme.httpChallenge]
 entryPoint = "http"
 
-[api]
