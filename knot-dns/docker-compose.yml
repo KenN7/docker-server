@@ -4,6 +4,7 @@ services:
   knot:
     image: cznic/knot:latest
     container_name: knot
+    restart: unless-stopped
     ports:
       - "53:53"
       - "53:53/udp"

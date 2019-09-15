@@ -45,5 +45,6 @@ services:
       - default
 
   redis:
+    restart: unless-stopped
     image: redis:alpine
 
