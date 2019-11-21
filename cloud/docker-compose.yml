@@ -17,7 +17,7 @@ services:
       - ${DATA_ROOT_DIR:-/srv/data}/cloud/db:/var/lib/postgresql/data
 
   app:
-    image: nextcloud:16-fpm-alpine
+    image: nextcloud:17-fpm-alpine
     restart: unless-stopped
     environment:
       - POSTGRES_DB=nextcloud

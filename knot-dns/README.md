@@ -2,12 +2,12 @@
 
 ## Copy conf
 ```bash 
-cp knot.conf.sample ${CONF_ROOT_DIR:-/srv/docker}/knot/config/knot.sample
+cp knot.conf.sample ${CONF_ROOT_DIR:-/srv/docker}/knot/config/knot.conf
 ```
 
 ## Edit zones
 ```bash 
-vim ${CONF_ROOT_DIR:-/srv/docker}/knot/config/knot.sample
+vim ${CONF_ROOT_DIR:-/srv/docker}/knot/config/knot.conf
 ```
 
 ## Launch
