@@ -1,0 +1,12 @@
+- config docker-compose.yml with traefik2
+> touch acme.json htdigest
+> chmod 600 acme.json
+- add labels to proxyfied services
+
+> docker network create web
+
+# Add an user
+htdigest htdigest traefik <USER>
+
+# Run
+> docker-compose up -d

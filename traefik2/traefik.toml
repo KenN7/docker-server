@@ -1,0 +1,23 @@
+[log]
+  level = "INFO" #DEBUG, INFO, WARN, ERROR, FATAL, PANIC
+  format = "common"
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+
+  [entryPoints.websecure]
+    address = ":443"
+
+[api]
+
+[providers.docker]
+  endpoint = "tcp://socket-proxy:2375"
+  network = "web"
+  watch = true
+  exposedByDefault = false
+
+[certificatesResolvers.lets.acme]
+  email = "traefik@ananas.space"
+  storage = "acme.json"
+  [certificatesResolvers.lets.acme.tlsChallenge]
