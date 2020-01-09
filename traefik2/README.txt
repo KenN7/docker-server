@@ -10,8 +10,7 @@ htdigest htdigest traefik <USER>
 # Add labels to proxified services (replace SERVICE and vars)
 - "traefik.enable=true"
 - "traefik.http.routers.SERVICE.rule=Host(`${PROXY_SERVICE:-traefik}.${PROXY_DOMAIN:-localhost}`)"
-- "traefik.http.services.SERVICE.loadbalancer.server.port=8082" #optional for
-  specific port on service
+- "traefik.http.services.SERVICE.loadbalancer.server.port=8082" #optional for specific port on service
 - "traefik.http.routers.SERVICE.tls.certresolver=lets"
 - "traefik.http.routers.SERVICE.entrypoints=websecure"
 

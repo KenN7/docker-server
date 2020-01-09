@@ -11,11 +11,16 @@
 
 [api]
 
-[providers.docker]
-  endpoint = "tcp://socket-proxy:2375"
-  network = "web"
-  watch = true
-  exposedByDefault = false
+[providers]
+  [providers.docker]
+    endpoint = "tcp://socket-proxy:2375"
+    network = "web"
+    watch = true
+    exposedByDefault = false
+
+  [providers.file]
+    filename = "/etc/traefik/dynamic/dynamic-conf.toml"
+    watch = true
 
 [certificatesResolvers.lets.acme]
   email = "traefik@ananas.space"
