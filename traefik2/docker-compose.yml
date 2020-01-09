@@ -33,7 +33,6 @@ services:
     labels:
       # dashboard
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`${PROXY_SERVICE:-traefik}.${PROXY_DOMAIN:-localhost}`)"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.tls.certresolver=lets"
       - "traefik.http.routers.traefik.entrypoints=websecure"
