@@ -25,7 +25,7 @@ services:
       - web
     volumes:
       - ./traefik.toml:/etc/traefik/traefik.toml
-      - ./dynamic-conf.toml:/etc/traefik/dynamic/dynamic-conf.toml
+      - ./dynamic:/etc/traefik/dynamic
       - ./acme.json:/acme.json
       - ./htdigest:/htdigest
     depends_on:

@@ -19,7 +19,7 @@
     exposedByDefault = false
 
   [providers.file]
-    filename = "/etc/traefik/dynamic/dynamic-conf.toml"
+    directory = "/etc/traefik/dynamic"
     watch = true
 
 [certificatesResolvers.lets.acme]
