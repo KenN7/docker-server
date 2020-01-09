@@ -2,7 +2,7 @@ version: '3'
 
 services:
   socket-proxy:
-    image: tecnativa/docker-socket-proxy
+    image: tigerj/docker-socket-proxy
     restart: unless-stopped
     volumes:
         - /var/run/docker.sock:/var/run/docker.sock:ro
