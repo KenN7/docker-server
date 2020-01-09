@@ -14,5 +14,8 @@ htdigest htdigest traefik <USER>
 - "traefik.http.routers.SERVICE.tls.certresolver=lets"
 - "traefik.http.routers.SERVICE.entrypoints=websecure"
 
+# Create and edit the dynamic conf
+> mv dynamic_conf.toml.sample dynamic_conf.toml
+
 # Run
 > docker-compose up -d

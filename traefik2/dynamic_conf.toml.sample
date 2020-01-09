@@ -1,8 +1,6 @@
 ## Dynamic configuration
+# Put here you dynamic conf (sample below)
 
-[http.routers]
-  [http.routers.traefik]
-    rule = "Host(`traefik.dyn.kenh.fr`, `traefik.dyn.ananas.space`)"
 
 #[http.routers]
 #  [http.routers.my-router]
