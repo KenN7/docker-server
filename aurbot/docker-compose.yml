@@ -1,0 +1,30 @@
+version: '3'
+
+networks:
+  web:
+    external: true
+
+services:
+  aurbot:
+    build: .
+    restart: unless-stopped
+    environment:
+      - AURBOT_DATADIR=/home/build/build
+    volumes:
+      - ./data/build:/home/build/build
+      - ./data/repo:/home/build/repo
+      - ./aurbot.conf:/etc/aurbot.conf
+
+  web:
+    image: nginx:alpine
+    restart: unless-stopped
+    volumes:
+      - ./data/repo:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - web
+      - default
+    ports:
+      - 8080:80
+    # labels:
+
