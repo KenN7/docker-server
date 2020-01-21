@@ -1,0 +1,29 @@
+version: "3"
+
+networks:
+  web:
+    external: true
+
+services:
+  deluge:
+    image: linuxserver/deluge
+    restart: unless-stopped
+    ports:
+      - "8112:8112"
+      - "58846-58860:58846-58860"
+      - "58846-58860:58846-58860/udp"
+    environment:
+      # - PUID=1000
+      # - PGID=1000
+      - TZ=timezone
+      - UMASK_SET=022 #optional
+      - DELUGE_LOGLEVEL=error #optional
+    volumes:
+      - ${CONF_ROOT_DIR:-/srv/docker}/deluge/config:/config
+      - ${DATA_ROOT_DIR:-/srv/data}/downloads:/downloads
+    labels:
+      traefik.enable: "true"
+      traefik.port: "8112"
+      traefik.frontend.rule: "Host: deluge.bjk-fansub.com, deluge.kenh.fr, deluge.ananas.space"
+    networks:
+      - web

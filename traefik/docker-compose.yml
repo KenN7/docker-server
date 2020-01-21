@@ -1,0 +1,51 @@
+version: "3"
+  
+services:
+  socket-proxy:
+    image: tecnativa/docker-socket-proxy
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      SERVICES: 1
+      TASKS: 1
+      NETWORKS: 1
+      CONTAINERS: 1
+    networks:
+      - mgmt
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+  traefik:
+    image: traefik:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - 443:443
+      - 80:80
+    networks:
+      - mgmt
+      - web
+    volumes:
+      - ./traefik.toml:/etc/traefik/traefik.toml
+      - ./acme.json:/acme.json
+      - ./htdigest:/htdigest
+    command: --acme.email=${ACME_EMAIL} --docker --docker.endpoint=tcp://socket-proxy:2375 --docker.watch --docker.exposedbydefault=false --docker.network=web
+    deploy:
+      placement:
+        constraints:
+          - node.role == worker
+    labels:
+      traefik.enable: "true"
+      traefik.port: "8080"
+      traefik.frontend.auth.digest.usersFile: "/htdigest"
+      # traefik.frontend.rule: "Host: traefik.ananas.space; Host: traefik.kenh.fr; Host: ns341354.ip-46-105-97.eu"
+      traefik.frontend.rule: "Host: ns341354.ip-46-105-97.eu, traefik.bjk-fansub.com, traefik.ananas.space, traefik.kenh.fr"
+
+networks:
+  mgmt:   
+  web:
+    external: true

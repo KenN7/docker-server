@@ -1,0 +1,13 @@
+# Example of a very simple Knot DNS configuration.
+
+server:
+    listen: 0.0.0.0@53
+    listen: ::@53
+
+zone:
+  - domain: example.com
+    file: example.com.zone
+
+log:
+  - target: stdout
+    any: info
