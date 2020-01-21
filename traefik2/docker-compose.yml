@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  socket-proxy:
+    image: tigerj/docker-socket-proxy
+    restart: unless-stopped
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      SERVICES: 1
+      TASKS: 1
+      NETWORKS: 1
+      CONTAINERS: 1
+    networks:
+      - mgmt
+
+  traefik:
+    image: traefik:latest
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - mgmt
+      - web
+    volumes:
+      - ./traefik.toml:/etc/traefik/traefik.toml
+      - ./dynamic_conf.toml:/etc/traefik/dynamic_conf.toml
+      - ./acme.json:/acme.json
+      - ./htdigest:/htdigest
+    depends_on:
+      - socket-proxy
+    labels:
+      # dashboard
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`${PROXY_SERVICE:-traefik}.${PROXY_DOMAIN:-localhost}`)"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.tls.certresolver=lets"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.middlewares=admin"
+      - "traefik.http.middlewares.admin.digestauth.usersfile=/htdigest"
+      # middleware redirect
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      # global redirect to https
+      - "traefik.http.routers.redirs.rule=hostregexp(`{host:.+}`)"
+      - "traefik.http.routers.redirs.entrypoints=web"
+      - "traefik.http.routers.redirs.middlewares=redirect-to-https"
+      
+networks:
+  mgmt:   
+  web:
+    external: true

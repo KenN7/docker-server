@@ -1,0 +1,28 @@
+[log]
+  level = "INFO" #DEBUG, INFO, WARN, ERROR, FATAL, PANIC
+  format = "common"
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+
+  [entryPoints.websecure]
+    address = ":443"
+
+[api]
+
+[providers]
+  [providers.docker]
+    endpoint = "tcp://socket-proxy:2375"
+    network = "web"
+    watch = true
+    exposedByDefault = false
+
+  [providers.file]
+    filename = "/etc/traefik/dynamic_conf.toml"
+    watch = true
+
+[certificatesResolvers.lets.acme]
+  email = "traefik@ananas.space"
+  storage = "acme.json"
+  [certificatesResolvers.lets.acme.tlsChallenge]
