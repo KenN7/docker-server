@@ -28,8 +28,6 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
-# RUN systemctl enable aurbot.service
 USER build
-# RUN mkdir -p /home/build/repo/
-CMD ["/usr/bin/aurbot","--debug"]
+CMD ["/usr/bin/aurbot"]
 
