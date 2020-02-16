@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+  db:
+    image: mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_USER: streama
+      MYSQL_DATABASE: streama
+    env_file:
+      - .env
+
+  streama:
+    image: gkiko/streama:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - /srv/data/downloads/downloaded:/data # !!! CHANGE THIS TO YOU LOCAL VIDEO STORE PATH !!!
+    depends_on:
+      - db
+    environment:
+      ACTIVE_PROFILE: mysql
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_DB: streama
+      MYSQL_USER: streama
+    env_file:
+      - .env
