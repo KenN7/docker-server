@@ -21,8 +21,10 @@ services:
       - web
       - default
     labels:
-      traefik.enable: "true"
-      traefik.frontend.rule: "Host: ${CHATONS_SERVICE:-sentry}.${CHATONS_DOMAIN:-localhost}, www.${CHATONS_SERVICE:-sentry}.${CHATONS_DOMAIN:-localhost}"
+      - "traefik.enable=true"
+      - "traefik.http.routers.sentry.rule=Host(`${CHATONS_SERVICE:-sentry}.${CHATONS_DOMAIN:-localhost}`)"
+      - "traefik.http.routers.sentry.tls.certresolver=lets"
+      - "traefik.http.routers.sentry.entrypoints=websecure"
     environment:
       - SENTRY_REDIS_HOST=redis
       - SENTRY_POSTGRES_HOST=db

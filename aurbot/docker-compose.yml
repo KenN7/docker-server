@@ -24,6 +24,8 @@ services:
     networks:
       - web
     labels:
-      traefik.enable: "true"
-      traefik.frontend.rule: "Host: repo.bjk-fansub.com, repo.ananas.space, repo.kenh.fr"
+      - "traefik.enable=true"
+      - "traefik.http.routers.aurbot.rule=Host(`repo.kenh.fr`,`repo.ananas.space`,`repo.bjk-fansub.com`)"
+      - "traefik.http.routers.aurbot.tls.certresolver=lets"
+      - "traefik.http.routers.aurbot.entrypoints=websecure"
 

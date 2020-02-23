@@ -21,8 +21,9 @@ services:
       - "2222:22"
       - "4567:4567"
     labels:
-      traefik.enable: "true"
-      traefik.frontend.rule: "Host: ${CHATONS_SERVICE:-gitlab}.${CHATONS_DOMAIN:-localhost}, www.${CHATONS_SERVICE:-gitlab}.${CHATONS_DOMAIN:-localhost}"
-      traefik.port: "80"
+      - "traefik.enable=true"
+      - "traefik.http.routers.gitlab.rule=Host(`${CHATONS_SERVICE:-gitlab}.${CHATONS_DOMAIN:-localhost}`)"
+      - "traefik.http.routers.gitlab.tls.certresolver=lets"
+      - "traefik.http.routers.gitlab.entrypoints=websecure"
     networks:
       - web
