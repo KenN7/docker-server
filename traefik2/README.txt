@@ -14,6 +14,20 @@ htdigest htdigest traefik <USER>
 - "traefik.http.routers.SERVICE.tls.certresolver=lets"
 - "traefik.http.routers.SERVICE.entrypoints=websecure"
 
+#(Optionnal) Overrride router rule for Host
+Since Host rules change on a server basis, you can choose to leave it untouched
+and orride it with a separate compose file.
+Example for traefik dashboard (change the service name and rule to accomodate with other services)
+> vim docker-compose.override.yml
+"""
+version: '3'
+
+services:
+  traefik:
+    labels:
+      - "traefik.http.routers.traefik.rule=Host(`hass.lan`)"
+"""
+
 # Create and edit the dynamic conf
 > mv dynamic_conf.toml.sample dynamic_conf.toml
 
