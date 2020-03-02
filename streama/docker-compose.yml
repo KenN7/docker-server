@@ -1,0 +1,39 @@
+version: '3.1'
+
+networks:
+  web:
+    external: true
+
+services:
+  db:
+    image: mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_USER: streama
+      MYSQL_DATABASE: streama
+    env_file:
+      - .env
+
+  streama:
+    image: gkiko/streama:latest
+    volumes:
+      - /srv/data/streama:/data # !!! CHANGE THIS TO YOU LOCAL VIDEO STORE PATH !!!
+    depends_on:
+      - db
+    networks:
+      - web
+      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.streama.rule=Host(`nitflex.kenh.fr`,`nitflex.ananas.space`)"
+      - "traefik.http.routers.streama.tls.certresolver=lets"
+      - "traefik.http.services.streama.loadbalancer.server.port=8080"
+      - "traefik.http.routers.streama.entrypoints=websecure"
+    environment:
+      ACTIVE_PROFILE: mysql
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_DB: streama
+      MYSQL_USER: streama
+    env_file:
+      - .env
