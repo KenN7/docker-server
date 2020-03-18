@@ -1,0 +1,23 @@
+# docker run -it --rm
+# -p 2222:22 
+# --name rsshd 
+# -p 10000-10100:10000-10100 
+# -e PASSWORD=secret 
+# -v /opt/keys/host:/etc/ssh/keys
+# -v /opt/keys/clients:/root/.ssh efrecon/rsshd
+
+version: "3"
+
+services:
+    rsshd:
+        image: efrecon/rsshd
+        restart: unless-stopped
+        env_file:
+          - .env
+        volumes:
+            - ./keys/host:/etc/ssh/keys
+            - ./keys/clients:/root/.ssh
+        ports:
+            - "2222:22"
+            - "10000-10100:10000-10100"
+
