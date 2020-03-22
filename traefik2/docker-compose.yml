@@ -27,7 +27,7 @@ services:
       - ./traefik.toml:/etc/traefik/traefik.toml
       - ./dynamic_conf.toml:/etc/traefik/dynamic_conf.toml
       - ./acme.json:/acme.json
-      - ./htdigest:/htdigest
+      - ./htpasswd:/htpasswd
     depends_on:
       - socket-proxy
     labels:
@@ -38,7 +38,7 @@ services:
       - "traefik.http.routers.traefik.tls.certresolver=lets"
       - "traefik.http.routers.traefik.entrypoints=websecure"
       - "traefik.http.routers.traefik.middlewares=admin"
-      - "traefik.http.middlewares.admin.digestauth.usersfile=/htdigest"
+      - "traefik.http.middlewares.admin.basicauth.usersfile=/htpasswd"
       # middleware redirect
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       # global redirect to https

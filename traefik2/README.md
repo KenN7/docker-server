@@ -2,10 +2,14 @@
 > docker network create web
 
 ## create auth and acme file
-> touch acme.json htdigest
+```bash
+> touch acme.json
 > chmod 600 acme.json
+```
 ### Add an user
-> htdigest htdigest traefik <USER>
+```bash
+> htpasswd -c htpasswd user
+```
 
 ## Add labels to proxified services (replace SERVICE and vars)
 ```
