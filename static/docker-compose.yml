@@ -12,7 +12,7 @@ services:
       - ${CHATONS_ROOT_DIR:-/srv/chatons}/static/${CHATONS_STATIC_SITE:-static}:/usr/share/nginx/html:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.SERVICE.rule=Host(`${PROXY_SERVICE:-static}.${PROXY_DOMAIN:-localhost}`)"
+      - "traefik.http.routers.static.rule=Host(`${PROXY_SERVICE:-static}.${PROXY_DOMAIN:-localhost}`)"
       - "traefik.http.routers.static.tls.certresolver=lets"
       - "traefik.http.routers.static.entrypoints=websecure"
     networks:
