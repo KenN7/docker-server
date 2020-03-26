@@ -1,5 +1,7 @@
 ## docker network for proxified services
+```bash
 > docker network create web
+```
 
 ## create auth and acme file
 ```bash
