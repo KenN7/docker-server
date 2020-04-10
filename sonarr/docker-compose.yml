@@ -6,11 +6,11 @@ networks:
 
 services:
   radarr:
-    image: linuxserver/radarr
+    image: linuxserver/sonarr
     restart: unless-stopped
-    user: 1000:1000
     networks:
       - web
+    user: 1000:1000
     environment:
       # - PUID=1000
       # - PGID=1000
@@ -21,7 +21,7 @@ services:
       - ./data:/data
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.radarr.rule=Host(`radarr.ig11.ananas.space`)"
+      - "traefik.http.routers.radarr.rule=Host(`sonarr.ig11.ananas.space`)"
       - "traefik.http.routers.radarr.tls.certresolver=lets"
-      - "traefik.http.services.radarr.loadbalancer.server.port=7878"
+      - "traefik.http.services.radarr.loadbalancer.server.port=8989"
       - "traefik.http.routers.radarr.entrypoints=websecure"
