@@ -1,0 +1,25 @@
+version: "3"
+
+networks:
+  web:
+    external: true
+
+services:
+  jackett:
+    image: linuxserver/jackett
+    restart: unless-stopped
+    networks:
+      - web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+    volumes:
+      - ${CONF_ROOT_DIR:-/srv/docker}/jackett/config:/config
+      - ${DATA_ROOT_DIR:-/srv/data}/downloads/torrents:/downloads
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jackett.rule=Host(`jackett.ananas.space`)"
+      - "traefik.http.routers.jackett.tls.certresolver=lets"
+      - "traefik.http.services.jackett.loadbalancer.server.port=9117"
+      - "traefik.http.routers.jackett.entrypoints=websecure"
