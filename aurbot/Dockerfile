@@ -17,6 +17,8 @@ USER root
 RUN pacman -U *.pkg.tar.xz --noconfirm
 RUN echo "Set disable_coredump false" >> /etc/sudo.conf
 RUN echo "build ALL=(ALL) NOPASSWD: /usr/bin/pacman" >> /etc/sudoers
+#add multilib 32bit support
+RUN echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 
 #add commit script
 ADD ./commit.sh /commit.sh
