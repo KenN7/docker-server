@@ -8,14 +8,14 @@ services:
   deluge:
     image: linuxserver/deluge
     restart: unless-stopped
-    user: 1000:1000
+    # user: 1000:1000
     ports:
       - "8112:8112"
       - "58846-58900:58846-58900"
       - "58846-58900:58846-58900/udp"
     environment:
-      # - PUID=1000
-      # - PGID=1000
+      - PUID=1000
+      - PGID=1000
       - TZ=timezone
       - UMASK_SET=022 #optional
       - DELUGE_LOGLEVEL=error #optional

@@ -8,12 +8,11 @@ services:
   sonarr:
     image: linuxserver/sonarr
     restart: unless-stopped
-    user: 1000:1000
     networks:
       - web
     environment:
-      # - PUID=1000
-      # - PGID=1000
+      - PUID=1000
+      - PGID=1000
       - TZ=Europe/Brussels
       - UMASK_SET=022 #optional
     volumes:
@@ -21,7 +20,7 @@ services:
       - ${DATA_ROOT_DIR:-/srv/data}/downloads:/downloads
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.radarr.rule=Host(`sonarr.ig11.ananas.space`)"
-      - "traefik.http.routers.radarr.tls.certresolver=lets"
-      - "traefik.http.services.radarr.loadbalancer.server.port=8989"
-      - "traefik.http.routers.radarr.entrypoints=websecure"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.ananas.space`)"
+      - "traefik.http.routers.sonarr.tls.certresolver=lets"
+      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
+      - "traefik.http.routers.sonarr.entrypoints=websecure"

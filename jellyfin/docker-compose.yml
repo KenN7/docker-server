@@ -10,9 +10,9 @@ services:
     restart: unless-stopped
     user: 1000:1000
     volumes:
-      - /srv/data/streama/config:/config
-      - /srv/data/streama/cache:/cache
-      - /srv/data/streama/videos:/media
+      - /home/ken/confs/jellyfin/config:/config
+      - /home/ken/confs/jellyfin/cache:/cache
+      - /srv/data/downloads/jellyfin:/media
     networks:
       - web
     devices:
