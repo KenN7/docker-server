@@ -5,20 +5,20 @@ networks:
     external: true
 
 services:
-  radarr:
+  sonarr:
     image: linuxserver/sonarr
     restart: unless-stopped
+    user: 1000:1000
     networks:
       - web
-    user: 1000:1000
     environment:
       # - PUID=1000
       # - PGID=1000
       - TZ=Europe/Brussels
-      # - UMASK_SET=022 #optional
+      - UMASK_SET=022 #optional
     volumes:
-      - ./config:/config
-      - ./data:/data
+      - ${CONF_ROOT_DIR:-/srv/docker}/sonarr/config:/config
+      - ${DATA_ROOT_DIR:-/srv/data}/downloads:/downloads
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.radarr.rule=Host(`sonarr.ig11.ananas.space`)"
