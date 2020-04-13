@@ -20,6 +20,4 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.jackett.rule=Host(`jackett.ananas.space`)"
-      - "traefik.http.routers.jackett.tls.certresolver=lets"
       - "traefik.http.services.jackett.loadbalancer.server.port=9117"
-      - "traefik.http.routers.jackett.entrypoints=websecure"
