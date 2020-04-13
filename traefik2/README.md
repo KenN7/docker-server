@@ -18,8 +18,6 @@
 - "traefik.enable=true"
 - "traefik.http.routers.SERVICE.rule=Host(`${PROXY_SERVICE:-traefik}.${PROXY_DOMAIN:-localhost}`)"
 - "traefik.http.services.SERVICE.loadbalancer.server.port=8082" #optional for specific port on service
-- "traefik.http.routers.SERVICE.tls.certresolver=lets"
-- "traefik.http.routers.SERVICE.entrypoints=websecure"
 ```
 
 ## (Optionnal) Overrride router rule for Host
@@ -37,7 +35,11 @@ services:
 ```
 
 ## Create and edit the dynamic conf
+```bash
 > mv dynamic_conf.toml.sample dynamic_conf.toml
+```
 
 ## Run
+```bash
 > docker-compose up -d
+```
