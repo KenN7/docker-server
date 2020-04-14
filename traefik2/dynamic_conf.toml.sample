@@ -6,7 +6,6 @@
     sslRedirect = true
     browserXssFilter = true
     contentTypeNoSniff = true
-    forceSTSHeader = true
 
 [tls.options.mytlsoption]
   minVersion = "VersionTLS12"
