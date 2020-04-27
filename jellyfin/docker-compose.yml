@@ -10,15 +10,15 @@ services:
     restart: unless-stopped
     user: 1000:1000
     volumes:
-      - /home/ken/confs/jellyfin/config:/config
-      - /home/ken/confs/jellyfin/cache:/cache
-      - /srv/data/downloads/jellyfin:/media
+      - ${CONF_ROOT_DIR:-/srv/docker}/jellyfin/config:/config
+      - ${CONF_ROOT_DIR:-/srv/docker}/jellyfin/cache:/cache
+      - ${DATA_ROOT_DIR:-/srv/data}/downloads/jellyfin:/media
     networks:
       - web
-    devices:
+    # devices:
       # VAAPI Devices
-      - /dev/dri/renderD128:/dev/dri/renderD128
-      - /dev/dri/card0:/dev/dri/card0
+      # - /dev/dri/renderD128:/dev/dri/renderD128
+      # - /dev/dri/card0:/dev/dri/card0
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.jellyfin.rule=Host(`nitflex.kenh.fr`,`nitflex.ananas.space`)"
