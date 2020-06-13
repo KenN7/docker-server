@@ -2,7 +2,6 @@ FROM archlinux
 
 RUN pacman -Syu --noconfirm --noprogressbar --quiet git pacman devtools python python-pip base-devel
 RUN useradd --create-home build
-
 # Build aurbot
 USER build
 WORKDIR /home/build
@@ -30,6 +29,7 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
+WORKDIR /home
 USER build
 CMD ["/usr/bin/aurbot"]
 
