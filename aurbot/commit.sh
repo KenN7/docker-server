@@ -6,7 +6,7 @@ for f in /home/build/repo/"$1"*; do
     break
 done
 
-for f in "$1"*.pkg.tar.xz; do
+for f in "$1"*.pkg.tar.*; do
     [ -e "$f" ] && cp "$f" /home/build/repo/ && repo-add /home/build/repo/$REPONAME /home/build/repo/"$f" \
     && echo "Added new package $f"
     break
