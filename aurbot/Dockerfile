@@ -13,7 +13,7 @@ RUN makepkg
 
 # Install aurbot
 USER root
-RUN pacman -U *.pkg.tar.xz --noconfirm
+RUN pacman -U *.pkg.tar.* --noconfirm
 RUN echo "Set disable_coredump false" >> /etc/sudo.conf
 RUN echo "build ALL=(ALL) NOPASSWD: /usr/bin/pacman" >> /etc/sudoers
 #add multilib 32bit support
