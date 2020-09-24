@@ -1,0 +1,19 @@
+version: "3"
+
+networks:
+  web:
+    external: true
+
+services:
+  dashmachine:
+    image: rmountjoy/dashmachine:latest
+    restart: unless-stopped
+    networks:
+      - web
+    # environment:
+    volumes:
+      - ${CONF_ROOT_DIR:-/srv/docker}/dashmachine/data:/dashmachine/dashmachine/user_data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dash.rule=Host(`dashmachine.ananas.space`,`ben.ananas.space`)"
+      - "traefik.http.services.dash.loadbalancer.server.port=5000"
