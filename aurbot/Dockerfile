@@ -2,7 +2,6 @@ FROM archlinux
 
 RUN pacman -Syu --noconfirm --noprogressbar --quiet git pacman devtools python python-pip base-devel
 RUN useradd --create-home build
-
 # Build aurbot
 USER build
 WORKDIR /home/build
@@ -14,7 +13,7 @@ RUN makepkg
 
 # Install aurbot
 USER root
-RUN pacman -U *.pkg.tar.xz --noconfirm
+RUN pacman -U *.pkg.tar.* --noconfirm
 RUN echo "Set disable_coredump false" >> /etc/sudo.conf
 RUN echo "build ALL=(ALL) NOPASSWD: /usr/bin/pacman" >> /etc/sudoers
 #add multilib 32bit support
@@ -30,6 +29,7 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
+WORKDIR /home
 USER build
 CMD ["/usr/bin/aurbot"]
 
