@@ -1,7 +1,7 @@
 # Wireguard
 
 ## Configure
-If your kenerl is <5.6, first install wireguard kernel module on the host
+If your kernel is <5.6, first install wireguard kernel module on the host
 ```bash
 sudo apt install wireguard
 ```
