@@ -9,10 +9,11 @@ services:
     image: nginx:alpine
     restart: unless-stopped
     volumes:
-      - ${CHATONS_ROOT_DIR:-/srv/chatons}/static/${CHATONS_STATIC_SITE:-static}:/usr/share/nginx/html:ro
+      - ${DATA_ROOT_DIR:-/srv/data}/static:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.static.rule=Host(`${PROXY_SERVICE:-static}.${PROXY_DOMAIN:-localhost}`)"
+      - "traefik.http.routers.static.rule=Host(`static.ananas.space`, `static.kenh.fr`)"
     networks:
       - web
 
