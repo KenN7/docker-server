@@ -1,6 +1,6 @@
 FROM archlinux
 
-RUN pacman -Syu --noconfirm --noprogressbar --quiet git pacman devtools python python-pip base-devel
+RUN pacman -Syu --noconfirm --noprogressbar --quiet git pacman devtools python base-devel
 RUN useradd --create-home build
 # Build aurbot
 USER build
@@ -9,11 +9,10 @@ RUN mkdir -p /home/build/.gnupg/
 RUN echo "keyserver-options auto-key-retrieve" >> /home/build/.gnupg/gpg.conf
 RUN git clone https://github.com/kenn7/aurbot.git
 WORKDIR aurbot
-RUN makepkg
 
 # Install aurbot
 USER root
-RUN pacman -U *.pkg.tar.* --noconfirm
+RUN install -Dm755 aurbot /usr/bin/aurbot
 RUN echo "Set disable_coredump false" >> /etc/sudo.conf
 RUN echo "build ALL=(ALL) NOPASSWD: /usr/bin/pacman" >> /etc/sudoers
 #add multilib 32bit support
