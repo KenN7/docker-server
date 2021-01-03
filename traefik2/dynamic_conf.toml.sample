@@ -2,7 +2,8 @@
 # Put here you dynamic conf (sample below)
 [http.middlewares]
   [http.middlewares.security.headers]
-    frameDeny = true
+    # frameDeny = true
+    customFrameOptionsValue = "SAMEORIGIN"
     sslRedirect = true
     browserXssFilter = true
     contentTypeNoSniff = true
