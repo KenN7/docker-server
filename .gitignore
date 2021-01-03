@@ -1,0 +1,8 @@
+.env
+acme.*
+htpasswd
+pwd*
+*override.yml
+wireguard/config
+wireguard/modules
+aurbot/data
