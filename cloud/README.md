@@ -30,3 +30,19 @@ docker-compose exec --user www-data app php occ config:system:set  overwriteprot
 docker-compose up -d --scale app=3  # to get 3 instance of the "app" container
 ```
 
+
+## Proxy setting
+Add this to config.php, in order to work with the traefik proxy
+```
+'trusted_proxies' =>
+  array (
+    0 => '172.x.x.x',
+  ),
+```
+
+## Launch commands
+
+For example to put in maintenance mode:
+```
+docker-compose exec --user www-data app php occ maintenance:mode --on
+```
