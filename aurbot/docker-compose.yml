@@ -10,6 +10,8 @@ services:
     restart: unless-stopped
     environment:
       - AURBOT_DATADIR=/home/build/build
+    env_file:
+      - .env
     volumes:
       - ./data/build:/home/build/build
       - ./data/repo:/home/build/repo

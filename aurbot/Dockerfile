@@ -1,7 +1,13 @@
-FROM archlinux
+FROM archlinux:base-devel
+RUN pacman -Syu --noconfirm --noprogressbar
 
-RUN pacman -Syu --noconfirm --noprogressbar --quiet git pacman devtools python base-devel
+#add multilib 32bit support
+RUN echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+RUN pacman -Sy --noconfirm --noprogressbar --quiet git pacman devtools python
 RUN useradd --create-home build
+RUN echo "Set disable_coredump false" >> /etc/sudo.conf
+RUN echo "build ALL=(ALL) NOPASSWD: /usr/bin/pacman" >> /etc/sudoers
+
 # Build aurbot
 USER build
 WORKDIR /home/build
@@ -13,10 +19,6 @@ WORKDIR aurbot
 # Install aurbot
 USER root
 RUN install -Dm755 aurbot /usr/bin/aurbot
-RUN echo "Set disable_coredump false" >> /etc/sudo.conf
-RUN echo "build ALL=(ALL) NOPASSWD: /usr/bin/pacman" >> /etc/sudoers
-#add multilib 32bit support
-RUN echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 
 #add commit script
 ADD ./commit.sh /commit.sh
