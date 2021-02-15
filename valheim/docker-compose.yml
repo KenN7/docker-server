@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  valheim:
+    image: mbround18/valheim:latest
+    ports:
+      - 2456:2456/udp
+      - 2457:2457/udp
+      - 2458:2458/udp
+    environment:
+      TZ: "Europe/Brussels"
+      PORT: "2456"
+      PUBLIC: "1"
+      AUTO_UPDATE: "1"     
+    env_file:
+      - .env
+    volumes:
+      - ${CONF_ROOT_DIR:-/src/docker}/valheim:/home/steam/.config/unity3d/IronGate/Valheim
+      - ${DATA_ROOT_DIR:-/srv/data}/valheim/server:/home/steam/valheim
+
