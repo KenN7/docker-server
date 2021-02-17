@@ -11,10 +11,17 @@ services:
       TZ: "Europe/Brussels"
       PORT: "2456"
       PUBLIC: "1"
-      AUTO_UPDATE: "1"     
+      AUTO_UPDATE: "1"
+      AUTO_BACKUP: "1"
+      AUTO_BACKUP_SCHEDULE: "30 */1 * * *"
+      AUTO_BACKUP_REMOVE_OLD: "1"
+      AUTO_BACKUP_DAYS_TO_LIVE: "1"
+      AUTO_BACKUP_ON_UPDATE: "1"
+      AUTO_BACKUP_ON_SHUTDOWN: "1"
     env_file:
       - .env
     volumes:
-      - ${CONF_ROOT_DIR:-/src/docker}/valheim:/home/steam/.config/unity3d/IronGate/Valheim
+      - ${CONF_ROOT_DIR:-/src/docker}/valheim/conf:/home/steam/.config/unity3d/IronGate/Valheim
+      - ${CONF_ROOT_DIR:-/src/docker}/valheim/backups:/home/steam/backups
       - ${DATA_ROOT_DIR:-/srv/data}/valheim/server:/home/steam/valheim
 
