@@ -10,6 +10,7 @@ services:
     restart: unless-stopped
     networks:
       - web
+      - default
     environment:
       - PUID=1000
       - PGID=1000
@@ -30,6 +31,7 @@ services:
         - LOG_LEVEL=${LOG_LEVEL:-info}
         - LOG_HTML=${LOG_HTML:-false}
         - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+
       # ports:
         # - "${PORT:-8191}:8191"
         # works on port 8191
