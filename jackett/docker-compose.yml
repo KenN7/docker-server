@@ -21,3 +21,16 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.jackett.rule=Host(`jackett.ananas.space`)"
       - "traefik.http.services.jackett.loadbalancer.server.port=9117"
+
+  flaresolverr:
+      # DockerHub mirror flaresolverr/flaresolverr:latest
+      image: ghcr.io/flaresolverr/flaresolverr:latest
+      restart: unless-stopped
+      environment:
+        - LOG_LEVEL=${LOG_LEVEL:-info}
+        - LOG_HTML=${LOG_HTML:-false}
+        - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      # ports:
+        # - "${PORT:-8191}:8191"
+        # works on port 8191
+
