@@ -5,6 +5,8 @@ services:
     image: cznic/knot:latest
     container_name: knot
     restart: unless-stopped
+    networks:
+      - dns
     ports:
       - "53:53"
       - "53:53/udp"
@@ -13,3 +15,8 @@ services:
       - ${CONF_ROOT_DIR:-/srv/docker}/knot/rundir:/rundir
       - ${CONF_ROOT_DIR:-/srv/docker}/knot/config:/config
     command: knotd
+
+networks:
+  dns:
+    external: true
+

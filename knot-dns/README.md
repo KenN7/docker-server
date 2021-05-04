@@ -1,4 +1,5 @@
 # Knot-dns
+(see Pihole conf for creating dns network if needed)
 
 ## Copy conf
 ```bash 

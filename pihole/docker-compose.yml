@@ -1,0 +1,29 @@
+version: "3"
+
+# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+services:
+  pihole:
+    image: pihole/pihole:latest
+    restart: unless-stopped
+    environment:
+      TZ: 'Europe/Berlin'
+      PIHOLE_DNS_: 1.1.1.1
+    env_file:
+      - .env
+    # Volumes store your data between container upgrades
+    volumes:
+      - ${CONF_ROOT_DIR:-/srv/docker}/pihole/:/etc/pihole/
+    networks:
+      - web
+      - dns
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pihole.rule=Host(`pihole.kenh.fr`,`pihole.ananas.space`)"
+      - "traefik.http.services.pihole.loadbalancer.server.port=80"
+
+networks:
+  web:
+    external: true
+  dns:
+    external: true
+
