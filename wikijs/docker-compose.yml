@@ -1,6 +1,11 @@
 version: "3"
-services:
 
+networks:
+  web:
+    external: true
+
+
+services:
   db:
     image: postgres:13-alpine
     restart: unless-stopped
@@ -29,5 +34,9 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.wikijs.rule=Host(`wiki.ananas.space`)"
       - "traefik.http.services.wikijs.loadbalancer.server.port=3000"
+    networks:
+      - web
+      - default
+
 
 
