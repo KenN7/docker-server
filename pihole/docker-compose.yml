@@ -5,6 +5,9 @@ services:
   pihole:
     image: pihole/pihole:latest
     restart: unless-stopped
+    ports:
+      - "6767:67/tcp"
+      - "5353:53/tcp"
     environment:
       TZ: 'Europe/Berlin'
       PIHOLE_DNS_: 1.1.1.1
