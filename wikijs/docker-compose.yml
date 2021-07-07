@@ -1,0 +1,33 @@
+version: "3"
+services:
+
+  db:
+    image: postgres:13-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: wiki
+      POSTGRES_USER: wikijs
+    env_file:
+      - .env
+    volumes:
+      - ${DATA_ROOT_DIR:-/srv/data}/wikijs/db:/var/lib/postgresql/data
+
+  wiki:
+    image: requarks/wiki:2
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      DB_TYPE: postgres
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: wikijs
+      DB_NAME: wiki
+    env_file:
+      - .env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wikijs.rule=Host(`wiki.ananas.space`)"
+      - "traefik.http.services.wikijs.loadbalancer.server.port=3000"
+
+
