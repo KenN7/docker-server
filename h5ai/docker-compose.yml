@@ -1,0 +1,22 @@
+version: '3'
+
+networks:
+  web:
+    external: true
+
+services:
+  web:
+    image: awesometic/h5ai
+    restart: unless-stopped
+    volumes:
+      - ${DATA_ROOT_DIR:-/srv/data}/files:/h5ai
+      - ${CONF_ROOT_DIR:-/srv/docker}/h5ai:/config
+    environment:
+      - PUID=$UID
+      - PGID=$GID
+      - TZ=Europe/Brussels
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.h5ai.rule=Host(`files.ananas.space`, `files.kenh.fr`)"
+    networks:
+      - web
