@@ -9,7 +9,7 @@ services:
     image: awesometic/h5ai
     restart: unless-stopped
     volumes:
-      - ${DATA_ROOT_DIR:-/srv/data}/files:/h5ai
+      - ${DATA_ROOT_DIR:-/srv/data}/files:/h5ai:ro
       - ${CONF_ROOT_DIR:-/srv/docker}/h5ai:/config
     environment:
       - PUID=$UID

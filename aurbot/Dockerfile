@@ -1,4 +1,5 @@
 FROM archlinux:base-devel
+SHELL ["/bin/bash", "-c"]
 RUN pacman -Syu --noconfirm --noprogressbar
 
 #add multilib 32bit support
