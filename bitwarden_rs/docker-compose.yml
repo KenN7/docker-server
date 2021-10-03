@@ -6,7 +6,7 @@ networks:
 
 services:
   bitwarden:
-    image: bitwardenrs/server:alpine
+    image: vaultwarden/server:alpine
     restart: unless-stopped
     networks:
       - web
