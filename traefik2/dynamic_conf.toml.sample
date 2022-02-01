@@ -4,7 +4,6 @@
   [http.middlewares.security.headers]
     # frameDeny = true
     customFrameOptionsValue = "SAMEORIGIN"
-    sslRedirect = true
     browserXssFilter = true
     contentTypeNoSniff = true
 
