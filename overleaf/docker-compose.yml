@@ -1,23 +1,29 @@
-version: '3'
+version: "3"
+
+networks:
+  web:
+    external: true
+
 services:
     sharelatex:
-        restart: always
+        restart: unless-stopped
         # Server Pro users:
         # image: quay.io/sharelatex/sharelatex-pro
-        image: sharelatex/sharelatex
+        # image: sharelatex/sharelatex # its missing a lot of things...
+        image: t4skforce/sharelatex-full
         container_name: sharelatex
         depends_on:
-            mongo:
-                condition: service_healthy
-            redis:
-                condition: service_started
+            - mongo
+            - redis
 
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.overleaf.rule=Host(`tex.ig11.ananas.space`)"
-      - "traefik.http.services.overleaf.loadbalancer.server.port=80"
-    networks:
-      - web
+        labels:
+          - "traefik.enable=true"
+          - "traefik.http.routers.overleaf.rule=Host(`tex.ig11.ananas.space`)"
+          - "traefik.http.services.overleaf.loadbalancer.server.port=80"
+
+        networks:
+          - web
+          - default
         # ports:
             # - 80:80
         links:
@@ -110,7 +116,7 @@ services:
             # SHARELATEX_PROXY_LEARN: "true"
 
     mongo:
-        restart: always
+        restart: unless-stopped
         image: mongo:4.0
         container_name: mongo
         expose:
@@ -124,7 +130,7 @@ services:
             retries: 5
 
     redis:
-        restart: always
+        restart: unless-stopped
         image: redis:5
         container_name: redis
         expose:
