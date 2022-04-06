@@ -1,9 +1,17 @@
 # Valheim server
 ## Configure
-Configure the password, name and world file:
+Create a .env file and configure the password, name and world file:
 
 ```bash
-echo PASSWORD=yourPW >> .env
-echo NAME="Name Of Your World" >> .env
-echo WORLD=WorldFilename >> .env
+SERVER_PUBLIC=true
+TZ=Europe/Brussels
+BACKUPS_MAX_AGE=1
+PUID=1000
+PGID=1000
+SERVER_PASS=YourPassword
+SERVER_NAME=YourServerName
+WORLD_NAME=WorldNameFile
 ```
+
+
+
