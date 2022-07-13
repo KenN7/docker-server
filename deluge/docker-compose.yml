@@ -24,7 +24,7 @@ services:
       - ${DATA_ROOT_DIR:-/srv/data}/downloads:/downloads
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.deluge.rule=Host(`deluge.bjk-fansub.com`,`deluge.kenh.fr`,`deluge.ananas.space`)"
+      - "traefik.http.routers.deluge.rule=Host(`deluge.kenh.fr`,`deluge.ananas.space`)"
       - "traefik.http.services.deluge.loadbalancer.server.port=8112"
     networks:
       - web

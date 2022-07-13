@@ -36,7 +36,7 @@ services:
       - ${DATA_ROOT_DIR:-/srv/data}/cloud/app:/var/www/html:ro
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.cloud.rule=Host(`cloud.kenh.fr`,`cloud.ananas.space`,`cloud.bjk-fansub.com`,`nextcloud.ananas.space`,`nextcloud.kenh.fr`,`nextcloud.bjk-fansub.com`)"
+      - "traefik.http.routers.cloud.rule=Host(`cloud.kenh.fr`,`cloud.ananas.space`,`nextcloud.ananas.space`,`nextcloud.kenh.fr`)"
       - "traefik.http.middlewares.nc-rep.redirectregex.permanent=true"
       - "traefik.http.middlewares.nc-rep.redirectregex.regex=https://(.*)/.well-known/(card|cal)dav"
       - "traefik.http.middlewares.nc-rep.redirectregex.replacement=https://$$1/remote.php/dav/"
