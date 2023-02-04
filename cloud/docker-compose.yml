@@ -6,7 +6,7 @@ networks:
 
 services:
   db:
-    image: postgres:10-alpine
+    image: postgres:15-alpine
     restart: unless-stopped
     environment:
       - POSTGRES_DB=nextcloud  # nextcloud wants to create the db itself
@@ -14,10 +14,10 @@ services:
     env_file:
       - .env
     volumes:
-      - ${DATA_ROOT_DIR:-/srv/data}/cloud/db:/var/lib/postgresql/data
+      - ${DATA_ROOT_DIR:-/srv/data}/cloud/db2:/var/lib/postgresql/data
 
   app:
-    image: nextcloud:23-fpm-alpine
+    image: nextcloud:25-fpm-alpine
     restart: unless-stopped
     environment:
       - POSTGRES_DB=nextcloud
