@@ -28,6 +28,37 @@ services:
       - .env
     volumes:
       - ${DATA_ROOT_DIR:-/srv/data}/cloud/app:/var/www/html
+    depends_on:
+      - db
+      - redis
+
+  collabora:
+    image: collabora/code
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Brussels
+      - aliasgroup1=https://nextcloud.ananas.space
+      - dictionaries=en_US,fr_FR
+      - extra_params=--o:ssl.enable=false --o:ssl.termination=true
+    env_file:
+      - .env
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.collabora.rule=Host(`office.ananas.space`)'
+      - 'traefik.http.services.collabora.loadbalancer.server.port=9980'
+      - 'traefik.http.middlewares.collabora-header.headers.referrerPolicy=no-referrer'
+      - 'traefik.http.middlewares.collabora-header.headers.stsSeconds=15552000'
+      - 'traefik.http.middlewares.collabora-header.headers.forceSTSHeader=true'
+      - 'traefik.http.middlewares.collabora-header.headers.stsPreload=true'
+      - 'traefik.http.middlewares.collabora-header.headers.stsIncludeSubdomains=true'
+      - 'traefik.http.middlewares.collabora-header.headers.browserXssFilter=true'
+      - 'traefik.http.middlewares.collabora-header.headers.customRequestHeaders.X-Forwarded-Proto=https'
+      - 'traefik.http.routers.collabora.middlewares=collabora-header'
+    depends_on:
+      - app
+    networks:
+      - web
+      - default
 
   web:
     build: .
@@ -41,6 +72,8 @@ services:
       - "traefik.http.middlewares.nc-rep.redirectregex.regex=https://(.*)/.well-known/(card|cal)dav"
       - "traefik.http.middlewares.nc-rep.redirectregex.replacement=https://$$1/remote.php/dav/"
       - "traefik.http.routers.cloud.middlewares=nc-rep"
+    depends_on:
+      - app
     networks:
       - web
       - default
