@@ -12,7 +12,7 @@ services:
       - "53:53/udp"
     volumes:
       - ${CONF_ROOT_DIR:-/srv/docker}/knot/storage:/storage
-      - ${CONF_ROOT_DIR:-/srv/docker}/knot/rundir:/rundir
+      # - ${CONF_ROOT_DIR:-/srv/docker}/knot/rundir:/rundir
       - ${CONF_ROOT_DIR:-/srv/docker}/knot/config:/config
     command: knotd
 

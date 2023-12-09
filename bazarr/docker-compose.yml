@@ -1,0 +1,24 @@
+version: "3"
+
+networks:
+  web:
+    external: true
+
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    restart: unless-stopped
+    networks:
+      - web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+      - UMASK_SET=022 #optional
+    volumes:
+      - ${CONF_ROOT_DIR:-/srv/docker}/bazarr/config:/config
+      - ${DATA_ROOT_DIR:-/srv/data}/downloads:/downloads
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bazarr.rule=Host(`bazarr.ananas.space`)"
+      - "traefik.http.services.bazarr.loadbalancer.server.port=6767"

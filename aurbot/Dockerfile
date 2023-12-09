@@ -1,6 +1,6 @@
 FROM archlinux:base-devel
 SHELL ["/bin/bash", "-c"]
-RUN pacman -Syu --noconfirm --noprogressbar
+RUN pacman -Sy archlinux-keyring --noconfirm && pacman -Syu --noconfirm
 
 #add multilib 32bit support
 RUN echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
@@ -26,7 +26,7 @@ ADD ./commit.sh /commit.sh
 RUN chmod +x /commit.sh
 
 # Add Tini
-ENV TINI_VERSION v0.18.0
+ENV TINI_VERSION v0.19.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
