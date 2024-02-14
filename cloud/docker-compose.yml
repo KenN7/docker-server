@@ -17,7 +17,7 @@ services:
       - ${DATA_ROOT_DIR:-/srv/data}/cloud/db2:/var/lib/postgresql/data
 
   app:
-    image: nextcloud:25-fpm-alpine
+    image: nextcloud:28-fpm-alpine
     restart: unless-stopped
     environment:
       - POSTGRES_DB=nextcloud
@@ -28,6 +28,7 @@ services:
       - .env
     volumes:
       - ${DATA_ROOT_DIR:-/srv/data}/cloud/app:/var/www/html
+      - ${DATA_ROOT_DIR:-/srv/data}/cloud/php-fpm-custom.conf:/usr/local/etc/php-fpm.d/zz-custom.conf
     depends_on:
       - db
       - redis
