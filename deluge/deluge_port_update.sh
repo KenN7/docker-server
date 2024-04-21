@@ -12,7 +12,7 @@ fi
 # Function to update Deluge port
 update_deluge_port() {
   sleep 30
-  current_port=0 # Initialize the current port variable
+  current_port=0 
 
   while true; do
     # Fetch the port number
