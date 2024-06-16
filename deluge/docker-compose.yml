@@ -26,6 +26,13 @@ services:
       - "58846:58846"
     cap_add:
       - NET_ADMIN
+    networks:
+      gluetun_network:
+      default:
     env_file:
       - .env
+
+networks:
+  gluetun_network:
+    external: true
 

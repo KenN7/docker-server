@@ -3,6 +3,8 @@ version: "3"
 networks:
   web:
     external: true
+  gluetun_network:
+    external: true
 
 services:
   sonarr:
@@ -10,6 +12,7 @@ services:
     restart: unless-stopped
     networks:
       - web
+      - gluetun_network
     environment:
       - PUID=1000
       - PGID=1000

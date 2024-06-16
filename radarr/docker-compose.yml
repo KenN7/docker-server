@@ -3,13 +3,16 @@ version: "3"
 networks:
   web:
     external: true
+  gluetun_network:
+    external: true
 
 services:
   radarr:
     image: linuxserver/radarr
     restart: unless-stopped
     networks:
-      - web
+      web:
+      gluetun_network:
     environment:
       - PUID=1000
       - PGID=1000
@@ -22,3 +25,4 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.radarr.rule=Host(`radarr.ananas.space`)"
       - "traefik.http.services.radarr.loadbalancer.server.port=7878"
+
