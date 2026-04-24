@@ -1,0 +1,36 @@
+version: "3"
+
+networks:
+  rustdesk-net:
+    external: false
+
+services:
+  hbbs:
+    image: rustdesk/rustdesk-server:latest
+    container_name: hbbs
+    command: hbbs -r ig11.ananas.space:21117
+    restart: unless-stopped
+    ports:
+      - "21115:21115"
+      - "21116:21116"
+      - "21116:21116/udp"
+      - "21118:21118"
+    volumes:
+      - ${CONF_ROOT_DIR:-/srv/docker}/rustdesk/data:/root
+    networks:
+      - rustdesk-net
+    depends_on:
+      - hbbr
+
+  hbbr:
+    image: rustdesk/rustdesk-server:latest
+    container_name: hbbr
+    command: hbbr
+    restart: unless-stopped
+    ports:
+      - "21117:21117"
+      - "21119:21119"
+    volumes:
+      - ${CONF_ROOT_DIR:-/srv/docker}/rustdesk/data:/root
+    networks:
+      - rustdesk-net
